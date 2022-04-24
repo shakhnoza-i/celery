@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_celery_results', # to save celery results
+    'django_celery_results', # to save celery results in django admin
     'django_celery_beat',
 
     'mainapp',
@@ -109,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'UTC' # Asia/Almaty
 
 USE_I18N = True
 
@@ -142,5 +142,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_HOST_USER ='shahaisrailova@gmail.com' # sender
-EMAIL_HOST_PASSWORD = "*********"
+EMAIL_HOST_PASSWORD = "***********"
 DEFAULT_FROM_EMAIL = 'Celery <shahaisrailova@gmail.com@gmail.com>'

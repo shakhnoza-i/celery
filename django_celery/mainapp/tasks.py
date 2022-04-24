@@ -1,9 +1,10 @@
 
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 from celery import shared_task
 from django.contrib.auth import get_user_model # default user model
 from django.core.mail import send_mail
+from django.utils import timezone
 
 from core import settings
 from core.celery import app
@@ -23,11 +24,12 @@ def test_func(self):
 
 
 @shared_task(bind=True)
-def send_mail_func(self):
+def send_mail_func(self): # send mail to all users
     users = get_user_model().objects.all()
+    # timezone.localtime(users.date_time) + timedelta(days=2) - convert datetime field to our local timezone
     for user in users:
         mail_subject = "Hi! Celery Testing"
-        message = "If you are liking my content, please hit the like button and do subscribe to my channel"
+        message = "Email message body"
         to_email = user.email
         send_mail(
             subject=mail_subject,

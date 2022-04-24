@@ -12,10 +12,12 @@ app.conf.enable_utc = False # cause we use our own timezone
 app.conf.update(timezone = 'Asia/Almaty')
 
 app.config_from_object('django.conf:settings')
-# app.conf.beat_schedule = {
-#     'get-rate-every-day-at-12am':{
-#         'task': 'airflow.tasks.currency_rate',
-#         'schedule': 15,
-#     }
-# }
+app.conf.beat_schedule = {
+    'send-mail-every-day-at-12am': {
+        'task': 'mainapp.tasks.send_mail_func',
+        'schedule': crontab(hour=0, minute=0, day_of_month=19, month_of_year = 6), # day_of_week
+        # 'schedule': 15,
+        #'args': (2,) - to pass any datastructure as arguments to send_mail_func()
+    }
+}
 app.autodiscover_tasks(settings.INSTALLED_APPS)
