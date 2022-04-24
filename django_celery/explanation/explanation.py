@@ -40,4 +40,10 @@ Pool - decides who will actually perform the tasks - thread, child
 process, worker itself or else.
 CPU based task allocated to child process.
 I/O based task - to thread
+$ celery -A <project>.celery worker --pool=prefork --concurrency=5
+--autoscale=10,3 -l info
+Prefork - means using child processes - multiprocessing
+--autoscale=10,3 - max,min processes
+--pool=solo - creat only one worker and not spawn child processes and
+solo pool runs inside the worker process. So it can't be concurrency
 """
