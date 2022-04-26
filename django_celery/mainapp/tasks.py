@@ -47,6 +47,7 @@ def add(x, y):
 
 # When we chain tasks together, the second task will take the results of the first task as its first argument
 res = chain(add.s(1, 2), add.s(3)).apply_async()
+# You can chain any number of tasks
 
 
 # Groups are used to execute tasks in parallel. The group function takes in a list of signatures.
