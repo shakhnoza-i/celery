@@ -1,7 +1,7 @@
 
 import requests
 from datetime import datetime, timedelta
-from celery import shared_task
+from celery import shared_task, chain, group, chord
 from django.contrib.auth import get_user_model # default user model
 from django.core.mail import send_mail
 from django.utils import timezone
@@ -39,3 +39,22 @@ def send_mail_func(self): # send mail to all users
             fail_silently=True, # if fails - it doesn't touch others
         )
     return "Done"
+
+
+@app.task
+def add(x, y):
+    return x + y
+
+# When we chain tasks together, the second task will take the results of the first task as its first argument
+res = chain(add.s(1, 2), add.s(3)).apply_async()
+
+
+# Groups are used to execute tasks in parallel. The group function takes in a list of signatures.
+job = group([add.s(2, 2), add.s(4, 4),])
+result = job.apply_async()
+result.ready()  # have all subtasks completed?
+result.successful() # were all subtasks successful?
+result.get() # [4, 8 ]
+
+
+
